@@ -1,4 +1,4 @@
-It's simplest to just clone the original `dos-like` repo right into this source
+It's simplest to just clone the original [dos-like](https://github.com/mattiasgustavsson/dos-like) repo right into this source
 tree; it's not provided in this repo as a Git submodule, so you can easily
 clone a fork. A regular `git clone` of `dos-like` into this source tree will
 clone into a form the `CMakeLists.txt` script will work with by default:
