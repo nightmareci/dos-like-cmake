@@ -23,3 +23,7 @@ cmake -B build -DDOS_LIKE_SOURCE=/path/to/dos-like/source/root
 This CMake script is intended for developers of the `dos-like` project, to make
 it easy to develop and debug the library and examples in an IDE supported by
 CMake.
+
+This CMake script only supports Windows MSVC builds not using SDL2 nor GLEW, or
+builds on non-Windows platforms using SDL2 and GLEW.
+Building with TinyC isn't supported.
