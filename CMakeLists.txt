@@ -31,7 +31,7 @@ if(WIN32)
 		message(FATAL_ERROR "On Windows, only compiling with MSVC is supported.")
 	endif()
 else()
-	function(link_libs TARGET MAIN)
+	function(link_app_sdl_libraries TARGET MAIN)
 		# Library handling that works for all platforms, because this only uses
 		# built-in CMake features.
 
@@ -92,11 +92,11 @@ else()
 	endfunction()
 
 	add_library(dos_like STATIC "${DOS_LIKE_SOURCE}/source/dos.c")
-	link_libs(dos_like FALSE)
+	link_app_sdl_libraries(dos_like FALSE)
 
 	foreach(EXAMPLE ${EXAMPLES})
 		add_executable(${EXAMPLE} "${DOS_LIKE_SOURCE}/source/${EXAMPLE}.c")
 		target_link_libraries(${EXAMPLE} PRIVATE dos_like)
-		link_libs(${EXAMPLE} TRUE)
+		link_app_sdl_libraries(${EXAMPLE} TRUE)
 	endforeach()
 endif()
