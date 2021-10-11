@@ -39,7 +39,7 @@ else()
 		set(OpenGL_GL_PREFERENCE GLVND)
 		find_package(OpenGL REQUIRED)
 		find_package(Threads REQUIRED)
-		find_library(MATH_LIBRARY m) # Required if available, not required if unavailable (like on Windows).
+		find_library(MATH_LIBRARY m REQUIRED)
 
 		target_link_libraries(${TARGET} PRIVATE
 			${CMAKE_DL_LIBS}
@@ -54,7 +54,7 @@ else()
 
 		find_package(PkgConfig)
 		if(PKG_CONFIG_FOUND)
-			# Works on most Unix-type systems (Linux, macOS)
+			# If pkg-config is available, just use it for SDL2, as it's guaranteed to work.
 
 			function(target_pkg_config_import TARGET DEPENDENCY)
 				string(TOUPPER ${DEPENDENCY} DEPENDENCY_VARIABLE)
@@ -86,8 +86,6 @@ else()
 				SDL2::SDL2
 			)
 			if(MAIN)
-				# Required on Windows. Adding it for other platforms
-				# doesn't hurt anything.
 				target_link_libraries(${TARGET} SDL2::SDL2main)
 			endif()
 		endif()
