@@ -2,10 +2,11 @@ cmake_minimum_required(VERSION 3.10)
 
 set(CMAKE_VERBOSE_MAKEFILE on)
 
-project("dos-like" LANGUAGES C)
+project(dos-like LANGUAGES C)
 
 set(EXAMPLES
 	burn
+	edit
 	julia
 	mandelbrot
 	plasma
@@ -18,14 +19,14 @@ set(EXAMPLES
 	voxel
 )
 
-set(DOS_LIKE_SOURCE "dos-like" CACHE STRING "Path to the root of the original dos-like source tree")
+set(DOS_LIKE_SOURCE ${CMAKE_PROJECT_NAME} CACHE STRING "Path to the root of the original dos-like source tree")
 
 if(WIN32)
 	if(${CMAKE_C_COMPILER_ID} STREQUAL MSVC)
-		add_library(dos_like STATIC "${DOS_LIKE_SOURCE}/source/dos.c")
+		add_library(${CMAKE_PROJECT_NAME} STATIC "${DOS_LIKE_SOURCE}/source/dos.c")
 		foreach(EXAMPLE ${EXAMPLES})
 			add_executable(${EXAMPLE} "${DOS_LIKE_SOURCE}/source/${EXAMPLE}.c")
-			target_link_libraries(${EXAMPLE} PRIVATE dos_like)
+			target_link_libraries(${EXAMPLE} PRIVATE ${CMAKE_PROJECT_NAME})
 		endforeach()
 	else()
 		message(FATAL_ERROR "On Windows, only compiling with MSVC is supported.")
@@ -91,12 +92,12 @@ else()
 		endif()
 	endfunction()
 
-	add_library(dos_like STATIC "${DOS_LIKE_SOURCE}/source/dos.c")
-	link_app_sdl_libraries(dos_like FALSE)
+	add_library(${CMAKE_PROJECT_NAME} STATIC "${DOS_LIKE_SOURCE}/source/dos.c")
+	link_app_sdl_libraries(${CMAKE_PROJECT_NAME} FALSE)
 
 	foreach(EXAMPLE ${EXAMPLES})
 		add_executable(${EXAMPLE} "${DOS_LIKE_SOURCE}/source/${EXAMPLE}.c")
-		target_link_libraries(${EXAMPLE} PRIVATE dos_like)
+		target_link_libraries(${EXAMPLE} PRIVATE ${CMAKE_PROJECT_NAME})
 		link_app_sdl_libraries(${EXAMPLE} TRUE)
 	endforeach()
 endif()
